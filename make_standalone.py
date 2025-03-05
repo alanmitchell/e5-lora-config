@@ -9,13 +9,13 @@ from pathlib import Path
 
 subprocess.run("uv run pyinstaller -F configure.py", shell=True)
 
-exec_name = {
-    'win': 'configure-win',
-    'dar': 'configure-mac',
-    'lin': 'configure-linux'
+src_name, dest_name = {
+    'win': ('configure.exe', 'configure-win'),
+    'dar': ('configure', 'configure-mac'),
+    'lin': ('configure', 'configure-linux')
 }[sys.platform[:3]]
 
-src = Path("dist") / "configure"
-dest = Path("standalone-exec") / exec_name
+src = Path("dist") / src_name
+dest = Path("standalone-exec") / dest_name
 
 shutil.copy(src, dest)
