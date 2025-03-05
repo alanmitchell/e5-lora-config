@@ -10,7 +10,7 @@ from pathlib import Path
 subprocess.run("uv run pyinstaller -F configure.py", shell=True)
 
 src_name, dest_name = {
-    'win': ('configure.exe', 'configure-win'),
+    'win': ('configure.exe', 'configure-win.exe'),
     'dar': ('configure', 'configure-mac'),
     'lin': ('configure', 'configure-linux')
 }[sys.platform[:3]]
