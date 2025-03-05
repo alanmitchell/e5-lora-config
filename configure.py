@@ -47,7 +47,6 @@ dr_desc = select(
 ).ask()
 data_rate = choices[dr_desc]
 
-
 # A CSV file is used to track Device IDs and Keys
 FN_KEYS = 'keys.csv'
 if not Path(FN_KEYS).exists():
@@ -55,28 +54,28 @@ if not Path(FN_KEYS).exists():
     with open(FN_KEYS, 'w') as fkeys:
         fkeys.write('dev_eui,app_eui,app_key\n')
 
-# Generate a random App Key
-app_key = token_hex(16).upper()
-
-# Commands that need to be executed to configure the device; will be later
-# prefaced with an AT+.
-cmds = (
-    'FDEFAULT',
-    'UART=TIMEOUT, 2000',
-    f'ID=APPEUI, "{APP_EUI}"',
-    f'KEY=APPKEY,"{app_key}"',
-    'MODE=LWOTAA',
-    'DR=US915HYBRID',
-    'CH=NUM,8-15',
-    'CLASS=A',
-    'ADR=OFF',
-    f'DR={data_rate}',
-    'DELAY=RX1,5000',
-    'DELAY=RX2,6000',
-    'JOIN=AUTO,10,1200,0',
-)
-
 while True:
+
+    # Generate a random App Key
+    app_key = token_hex(16).upper()
+
+    # Commands that need to be executed to configure the device; will be later
+    # prefaced with an AT+.
+    cmds = (
+        'FDEFAULT',
+        'UART=TIMEOUT, 2000',
+        f'ID=APPEUI, "{APP_EUI}"',
+        f'KEY=APPKEY,"{app_key}"',
+        'MODE=LWOTAA',
+        'DR=US915HYBRID',
+        'CH=NUM,8-15',
+        'CLASS=A',
+        'ADR=OFF',
+        f'DR={data_rate}',
+        'DELAY=RX1,5000',
+        'DELAY=RX2,6000',
+        'JOIN=AUTO,10,1200,0',
+    )
 
     try:
         p = Serial(port_name, timeout=1.0)
